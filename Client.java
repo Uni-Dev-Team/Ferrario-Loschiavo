@@ -12,7 +12,7 @@ public class Client {
             System.out.println("Started connection");
 
             // Crei il socket e gli passi l IP e la Porta
-            Socket s1 = new Socket(InetAddress.getByName("192.168.1.62"), 1234);
+            Socket s1 = new Socket(InetAddress.getByName("192.168.1.113"), 1234);
             // Provi la connessione
             System.out.println("Connected" + s1.getRemoteSocketAddress());
 
@@ -28,7 +28,7 @@ public class Client {
             types.add(Notizia.Tipo.POLITICA);
             info = new ClientInfo(types, s1.getLocalSocketAddress());
             out.writeObject(info);
-            out.close();
+            //out.close();
 
             while(true) {
                 ObjectInputStream inFromServer = new ObjectInputStream(s1.getInputStream());
