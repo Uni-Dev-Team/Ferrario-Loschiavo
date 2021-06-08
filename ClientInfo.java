@@ -26,7 +26,7 @@ public class ClientInfo implements Serializable {
         result.append("Tipologie: [");
         for(int i = 0; i < newsTypes.size(); i++) {
             result.append(newsTypes.get(i));
-            result.append(i == newsTypes.size()-1 ? ", " : "");
+            result.append(i == newsTypes.size()-1 ? "" : ",");
         }
 
         result.append("]\n\n");
