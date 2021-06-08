@@ -39,7 +39,6 @@ public class Client {
                 if (response != null) {
                     System.out.println(response.toString());
                 }
-                inFromServer.close();
             }
 
             // Chiudi la connessione
