@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class BufferNotizie {
     // Attributes of the Buffer
     static int BUFFER_SIZE;
@@ -27,11 +29,23 @@ public class BufferNotizie {
             }
         }
 		
-		System.out.print(tmp+" read\n");
+		System.out.println("Buffer info: " + tmp + " read");
 		notify();
 		    return tmp;
             
 	}
+
+    public synchronized List<Notizia> getAllNotizie() {
+        List<Notizia> newsResult = new ArrayList<Notizia>();
+
+        for(Notizia news: buffer) {
+            if(news != null && !news.getContent().equals("")) {
+                newsResult.add(news);
+            }
+        }
+
+        return newsResult;
+    }
 
     public int getCurrentSize(){
 		return numItems;
@@ -53,7 +67,7 @@ public class BufferNotizie {
                     String resl = buffer[i].getContent();
                     resl += news.getContent();
                     buffer[i].setContent(resl);
-                    System.out.println("UPDATE: \n" + buffer[i].toString());
+                    System.out.println("Buffer info: \nUPDATE: \n" + buffer[i].toString());
                     break;
                }
            }

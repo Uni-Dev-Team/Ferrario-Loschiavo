@@ -29,15 +29,21 @@ public class Client {
             info = new ClientInfo(types, s1.getLocalSocketAddress());
             out.writeObject(info);
 
-            // Ricevi la risposta
-            InputStream inFromServer = s1.getInputStream();
-            DataInputStream in = new DataInputStream(inFromServer);
+            while(true) {
+                ObjectInputStream inFromServer = new ObjectInputStream(s1.getInputStream());
+                List<Notizia> inNews = new ArrayList<Notizia>();
+                try {
+                    inNews = (List<Notizia>) inFromServer.readObject();
+                } catch(ClassNotFoundException e) {}
 
-            // Stampi la risposta
-            System.out.println("Il server dice: "+ in.readUTF());
+                System.out.println("Server respond: ");
+                for(Notizia news: inNews) {
+                    System.out.println(news.toString());
+                }
+            }
 
             // Chiudi la connessione
-            s1.close();
+            // s1.close();
         }
         catch(IOException e) {
             e.printStackTrace();

@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Pubblicatore extends Thread {
     static int BUFFSIZE = 4;
-    BufferNotizie buffer;
+    public static BufferNotizie buffer;
     public static Random RAND;
     private ProduttoreNotizie[] threadProduttore;
 
@@ -19,7 +19,6 @@ public class Pubblicatore extends Thread {
 
     public void run() {
         while(true) {
-            // Codice
             try { Thread.sleep(5000); } catch(InterruptedException e) {}
         }
     }

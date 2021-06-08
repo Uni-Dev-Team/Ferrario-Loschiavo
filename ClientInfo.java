@@ -5,6 +5,7 @@ import java.util.*;
 public class ClientInfo implements Serializable {
     private List<Notizia.Tipo> newsTypes;
     private SocketAddress socketAddress;
+    private Socket socket;
 
     public ClientInfo(List<Notizia.Tipo> types, SocketAddress socketAddress) {
         this.newsTypes = new ArrayList<Notizia.Tipo>();
@@ -12,9 +13,25 @@ public class ClientInfo implements Serializable {
         this.socketAddress = socketAddress;
     }
 
+    public List<Notizia.Tipo> getNewsTypes() {
+        return this.newsTypes;
+    }
+
+    public SocketAddress getSocketAddress() {
+        return this.socketAddress;
+    }
+
+    public Socket getSocket() {
+        return this.socket;
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+
     public void addType(Notizia.Tipo newType) {
         if(!newsTypes.contains(newType)) newsTypes.add(newType);
-    }
+    };
 
     public void removeType(Notizia.Tipo type) {
         if(newsTypes.contains(type)) newsTypes.remove(type);
