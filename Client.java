@@ -28,6 +28,7 @@ public class Client {
             types.add(Notizia.Tipo.POLITICA);
             info = new ClientInfo(types, s1.getLocalSocketAddress());
             out.writeObject(info);
+            out.close();
 
             while(true) {
                 ObjectInputStream inFromServer = new ObjectInputStream(s1.getInputStream());
@@ -38,6 +39,7 @@ public class Client {
                 if (response != null) {
                     System.out.println(response.toString());
                 }
+                inFromServer.close();
             }
 
             // Chiudi la connessione
