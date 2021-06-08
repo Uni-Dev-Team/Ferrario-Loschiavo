@@ -31,14 +31,12 @@ public class Client {
 
             while(true) {
                 ObjectInputStream inFromServer = new ObjectInputStream(s1.getInputStream());
-                List<Notizia> inNews = new ArrayList<Notizia>();
+                ServerResponse response = null;
                 try {
-                    inNews = (List<Notizia>) inFromServer.readObject();
+                    response = (ServerResponse) inFromServer.readObject();
                 } catch(ClassNotFoundException e) {}
-
-                System.out.println("Server respond: ");
-                for(Notizia news: inNews) {
-                    System.out.println(news.toString());
+                if (response != null) {
+                    System.out.println(response.toString());
                 }
             }
 

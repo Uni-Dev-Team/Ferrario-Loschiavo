@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Server extends Thread {
     private ServerSocket serverSocket;
-    private List<ClientInfo> clientList = new ArrayList<ClientInfo>();
+    private static List<ClientInfo> clientList = new ArrayList<ClientInfo>();
     private static Pubblicatore publisher;
     private final InetAddress ipAddress = InetAddress.getLocalHost();
     public void run() {
@@ -53,7 +53,7 @@ public class Server extends Thread {
 
     // Utility
 
-    public void sendNews() {
+    public static void sendNews() {
         List<Notizia> allNews = Pubblicatore.buffer.getAllNotizie();
 
         HashMap<SocketAddress, List<Notizia>> data = new HashMap<SocketAddress, List<Notizia>>();
@@ -70,6 +70,8 @@ public class Server extends Thread {
                 }
                 data.put(info.getSocketAddress(), clientNews);
             }
+        } else {
+            System.out.println("Server info: No client connected to the server");
         }
         
         for(ClientInfo info: clientList) {
@@ -79,7 +81,8 @@ public class Server extends Thread {
             try {
                 os = info.getSocket().getOutputStream();
                 out = new ObjectOutputStream(os);
-                out.writeObject(news);
+                ServerResponse res = new ServerResponse(news);
+                out.writeObject(res);
             } catch (IOException e) {
                 System.err.println("Server error:");
                 e.printStackTrace();
