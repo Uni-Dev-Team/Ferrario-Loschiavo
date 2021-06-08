@@ -28,13 +28,13 @@ public class Client {
             types.add(Notizia.Tipo.POLITICA);
             info = new ClientInfo(types, s1.getLocalSocketAddress());
             out.writeObject(info);
-            //out.close();
 
             while(true) {
-                ObjectInputStream inFromServer = new ObjectInputStream(s1.getInputStream());
+                InputStream inFromServer = s1.getInputStream();
+                ObjectInputStream in = new ObjectInputStream(inFromServer);
                 ServerResponse response = null;
                 try {
-                    response = (ServerResponse) inFromServer.readObject();
+                    response = (ServerResponse) in.readObject();
                 } catch(ClassNotFoundException e) {}
                 if (response != null) {
                     System.out.println(response.toString());

@@ -30,11 +30,6 @@ public class Server extends Thread {
                 for (ClientInfo clientInfo : clientList) {
                     System.out.println(clientInfo);
                 }
-
-                DataOutputStream out = new DataOutputStream(server.getOutputStream());
-                out.writeUTF("Client added to newsletter to Server("+ server.getLocalSocketAddress() + ")");
-                // TODO: Add server.close();
-
             } catch (SocketTimeoutException e) {
                 System.err.println("Server error: Socket timed out!");
                 break;
