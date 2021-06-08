@@ -5,6 +5,7 @@ import java.util.*;
 public class Server extends Thread {
     private ServerSocket serverSocket;
     private static List<ClientInfo> clientList = new ArrayList<ClientInfo>();
+    private static List<ClientInfo> unreachableClientList = new ArrayList<ClientInfo>();
     private static Pubblicatore publisher;
     private final InetAddress ipAddress = InetAddress.getLocalHost();
     public void run() {
@@ -78,11 +79,30 @@ public class Server extends Thread {
                 out = new ObjectOutputStream(os);
                 ServerResponse res = new ServerResponse(news);
                 out.writeObject(res);
-            } catch (IOException e) {
+            } catch (SocketException e) {
+                System.err.println("\n\n<*******>\n"+ info + "is unreachable it will be removed from the client list\n <********>\n\n");
+                clientList.add(info);
+            }
+             catch (IOException e) {
                 System.err.println("Server error:");
                 e.printStackTrace();
             }
         }
+        /* TODO: Trovare un modo per modificare la lista senza far crashare il server: 
+        Exception in thread "Thread-0" java.util.ConcurrentModificationException
+        at java.base/java.util.ArrayList$Itr.checkForComodification(ArrayList.java:1043)
+        at java.base/java.util.ArrayList$Itr.next(ArrayList.java:997)
+        at Server.sendNews(Server.java:73)
+         at Pubblicatore.run(Pubblicatore.java:22)*/
+
+
+        // // if(clientList.removeAll(unreachableClientList)) {
+        //     System.out.println("\n\n<*******>\nUnreachable client removed from the clients list\n <********>\n\n");
+        // } else {
+        //     System.out.println("\n\n<*******>\nNo Unreachable clients to remove\n <********>\n\n");
+        // }
+        
+       
     }
 
     private Boolean isClientPresent(ClientInfo newClient) {

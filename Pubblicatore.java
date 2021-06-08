@@ -20,6 +20,9 @@ public class Pubblicatore extends Thread {
     public void run() {
         while(true) {
             Server.sendNews();
+            buffer.printBuffer();
+            buffer.resetBuffer();
+            buffer.printBuffer();
             try { Thread.sleep(5000); } catch(InterruptedException e) {}
         }
     }

@@ -12,7 +12,7 @@ class ProduttoreNotizie extends Thread {
             Notizia news = new Notizia(type, content);
             buffer.setItem(news);
 
-            try { Thread.sleep(10000); } catch(InterruptedException e) {}
+            try { Thread.sleep(1000); } catch(InterruptedException e) {}
         }
     }
 }

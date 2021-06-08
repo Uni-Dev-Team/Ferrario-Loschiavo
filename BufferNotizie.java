@@ -28,8 +28,6 @@ public class BufferNotizie {
                 tmp = notizia;
             }
         }
-		
-		System.out.println("Buffer info: " + tmp + " read");
 		notify();
 		    return tmp;
             
@@ -67,7 +65,7 @@ public class BufferNotizie {
                     String resl = buffer[i].getContent();
                     resl += news.getContent();
                     buffer[i].setContent(resl);
-                    System.out.println("Buffer info: \nUPDATE: \n" + buffer[i].toString());
+                    //System.out.println("Buffer info: \nUPDATE: \n" + buffer[i].toString());
                     break;
                }
            }
@@ -75,7 +73,7 @@ public class BufferNotizie {
             for (int i = 0; i < buffer.length; i++) {
                 if (buffer[i] == null) {
                     buffer[i] = news;
-                    System.out.println(buffer[i].toString());
+                    //System.out.println(buffer[i].toString());
                     break;
                 }
             }
@@ -94,5 +92,31 @@ public class BufferNotizie {
             } 
         }
         return resl;
+    }
+
+    public synchronized void resetBuffer() {
+        for (int i = 0; i < buffer.length; i++) {
+            buffer[i] = null;
+        }
+    }
+    private synchronized Boolean isEmpty() {
+        Boolean resl = true;
+        for (Notizia notizia : buffer) {
+            if(notizia != null) {
+                resl = false;
+            }
+        }
+        return resl;
+    }
+    public synchronized void printBuffer() {
+        System.out.println("Buffer printed: ");
+        if(!this.isEmpty()) {
+            for (Notizia notizia : buffer) {
+                System.out.println(notizia);
+            }
+        } else {
+            System.out.println("Buffer is empty");
+        }
+        
     }
 }
