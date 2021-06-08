@@ -14,8 +14,8 @@ Progetto di Esame per Programmazione Concorrente e Distribuita
 
 The workspace contains:
 
-- `src`: the folder to maintain sources
-- `classes`: the folder to maintain compiled files
+- `File 1`: info
+- `File 2`: info
 
 ## Dependency Management
 
