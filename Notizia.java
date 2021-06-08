@@ -63,7 +63,7 @@ public class Notizia implements Serializable {
         String[] prepositions = {"away","towards","around","near"};
 
         // Randomly create sentence
-        /*for ( int j = 0; j < 20; j++ ) {
+        for ( int j = 0; j < 5; j++ ) {
             int articles1 = Pubblicatore.RAND.nextInt(articles.length);
             int nouns1 = Pubblicatore.RAND.nextInt(nouns.length);
             int verbs1 = Pubblicatore.RAND.nextInt(verbs.length);
@@ -83,9 +83,8 @@ public class Notizia implements Serializable {
             // Capitalize first letter
             buffer.setCharAt(0, Character.toUpperCase(buffer.charAt(0)));
             content.append(buffer.toString());
-        }*/
+        }
 
-        content.append("Messaggio nuovo ");
         return content.toString();
     }
 
