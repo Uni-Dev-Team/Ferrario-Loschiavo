@@ -81,7 +81,7 @@ public class Server extends Thread {
             try {
                 os = info.getSocket().getOutputStream();
                 out = new ObjectOutputStream(os);
-                ServerResponse res = new ServerResponse(news);
+                ServerResponse res = new ServerResponse("news");
                 out.writeObject(res);
             } catch (IOException e) {
                 System.err.println("Server error:");
