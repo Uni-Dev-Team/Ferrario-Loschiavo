@@ -10,6 +10,10 @@ class BufferClientInfo {
         clientsInfo = new ArrayList<ClientInfo>();
     }
 
+    public synchronized List<ClientInfo> getClientsInfo() {
+        return clientsInfo;
+    }
+
     // Setter
     public synchronized void addItem(ClientInfo info) {
         if(!clientsInfo.contains(info)) clientsInfo.add(info);
@@ -21,7 +25,7 @@ class BufferClientInfo {
 
     public synchronized void setItem(SocketAddress address, Notizia.Tipo newType) {
         for(ClientInfo info: clientsInfo) {
-            if(address == info.getSocketAddress()) {
+            if(address.equals(info.getSocketAddress())) {
                 System.out.println("SOCKETADDRESS EQUALS");
                 info.addType(newType);
             }

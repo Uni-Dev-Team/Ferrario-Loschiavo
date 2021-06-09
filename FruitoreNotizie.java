@@ -1,9 +1,6 @@
 import java.io.*;
-import java.net.ConnectException;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.*;
+import java.util.regex.*;
 import java.net.*;
 
 
@@ -11,7 +8,10 @@ public class FruitoreNotizie {
     public static ClientRequest req;
     static int PORT;
     static String IP;
+    static Random rand;
+
     public static void main(String[] args) {
+        rand = new Random();
 
         //try {
         if (args.length == 2) {
@@ -31,8 +31,8 @@ public class FruitoreNotizie {
                         System.out.println("Connected" + s1.getRemoteSocketAddress());
     
                         // Formatti la richiesta che fai al server
-                        OutputStream outToServer = s1.getOutputStream();
-                        ObjectOutputStream out = new ObjectOutputStream(outToServer);
+                        OutputStream outToServer;
+                        ObjectOutputStream out;
 
                         //List<Notizia.Tipo> types = new ArrayList<Notizia.Tipo>();
                         //types.add(Notizia.Tipo.ATTUALITA);
@@ -42,15 +42,24 @@ public class FruitoreNotizie {
                         //  info = new ClientInfo(type, s1.getLocalSocketAddress());
                         //  out.writeObject(info);
                         //}
- 
-                        req = new ClientRequest(true, Notizia.Tipo.POLITICA, s1.getLocalSocketAddress());
-                        out.writeObject(req);
 
-                        outToServer = s1.getOutputStream();
-                        out = new ObjectOutputStream(outToServer);
+                        List<Notizia.Tipo> types = new ArrayList<Notizia.Tipo>();
+                        int numOfTypes = rand.nextInt(4) + 1;
+                        for(int i = 0; i < numOfTypes; i++) {
+                            Notizia.Tipo pickedType;
+                            do {
+                                pickedType = Notizia.getRandomType();
+                            } while(types.contains(pickedType));
+                            types.add(pickedType);
+                        }
 
-                        req = new ClientRequest(true, Notizia.Tipo.ATTUALITA, s1.getLocalSocketAddress());
-                        out.writeObject(req);
+                        for(Notizia.Tipo type: types) {
+                            outToServer = s1.getOutputStream();
+                            out = new ObjectOutputStream(outToServer);
+
+                            req = new ClientRequest(true, type, s1.getLocalSocketAddress());
+                            out.writeObject(req);
+                        }
 
                         InputStream inFromServer;
                         ObjectInputStream in;

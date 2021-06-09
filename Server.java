@@ -12,6 +12,7 @@ public class Server extends Thread {
     private final InetAddress ipAddress = InetAddress.getLocalHost();
 
     public void run() {
+        // this.setName("SERVER MAIN THREAD");
         while(true) {
             try {
                 System.out.println("Server info: Waiting for client on port: " + serverSocket.getLocalPort());
@@ -38,7 +39,7 @@ public class Server extends Thread {
                 // serversThreads.add(serverThread);
 
                 System.out.println("\nClient List: \n<< Client Connected List: >>");
-                for (ClientInfo clientInfo : clientList) {
+                for (ClientInfo clientInfo : bufferClientInfo.getClientsInfo()) {
                     System.out.println(clientInfo);
                 }
                 System.out.println("<< End of the list >>\n");
@@ -65,8 +66,8 @@ public class Server extends Thread {
         List<Notizia> allNews = Pubblicatore.buffer.getAllNotizie();
 
         HashMap<SocketAddress, List<Notizia>> data = new HashMap<SocketAddress, List<Notizia>>();
-        if(!clientList.isEmpty()) {
-            for(ClientInfo info: clientList) {
+        if(!bufferClientInfo.getClientsInfo().isEmpty()) {
+            for(ClientInfo info: bufferClientInfo.getClientsInfo()) {
                 List<Notizia> clientNews = new ArrayList<Notizia>();
                 for(Notizia news: allNews) {
                     for(Notizia.Tipo type: info.getNewsTypes()) {
@@ -82,7 +83,7 @@ public class Server extends Thread {
             System.out.println("Server info: No client connected to the server");
         }
         
-        for(ClientInfo info: clientList) {
+        for(ClientInfo info: bufferClientInfo.getClientsInfo()) {
             List<Notizia> news = data.get(info.getSocketAddress());
             OutputStream os;
             ObjectOutputStream out;
@@ -104,13 +105,10 @@ public class Server extends Thread {
             }
         }
 
-        if(clientList.removeAll(unreachableClientList)) {
+        if(bufferClientInfo.getClientsInfo().removeAll(unreachableClientList)) {
             System.out.println("CLIENT LIST INFO: Unreachable client removed from the clients list");
-        }
-        
-       
+        }  
     }
-
 
     // Main
     public static void main(String[] args) {
@@ -161,9 +159,12 @@ class ServeOneFruitore extends Thread {
             }
         }catch(SocketException e) {
             System.out.println(this.getName()+" CLIENT DISCONNECTED: THREAD KILLED");
+            Server.bufferClientInfo.removeItem(clientInfo);
             this.interrupt();
         } catch(IOException e) {
-            e.printStackTrace();
+            System.out.println(this.getName()+" CLIENT DISCONNECTED: THREAD KILLED");
+            Server.bufferClientInfo.removeItem(clientInfo);
+            this.interrupt();
         } catch(ClassNotFoundException e) {
             e.printStackTrace();
         }
