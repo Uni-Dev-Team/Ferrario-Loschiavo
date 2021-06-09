@@ -62,6 +62,7 @@ public class FruitoreNotizie {
                             req = new ClientRequest(true, type, s1.getLocalSocketAddress());
                             out.writeObject(req);
                         }
+                        System.out.println("\n");
 
                         InputStream inFromServer;
                         ObjectInputStream in;
