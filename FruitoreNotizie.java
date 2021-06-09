@@ -59,7 +59,7 @@ public class FruitoreNotizie {
                         System.out.print("Fruitore ha scelto tipologie: ");
                         for(Notizia.Tipo type: types) {
                             System.out.print(type.toString()+" ");
-                            // outToServer = s1.getOutputStream();
+                            outToServer = s1.getOutputStream();
                             // out = new ObjectOutputStream(outToServer);
 
                             req = new ClientRequest(true, type, s1.getLocalSocketAddress());

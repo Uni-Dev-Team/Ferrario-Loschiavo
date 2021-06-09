@@ -60,7 +60,7 @@ public class Server extends Thread {
         System.out.println("Server info: Server started on IP: " + ipAddress.getHostAddress() + " On Port: " + port);
     }
 
-    // Utility
+    // UtilitynumOfTypes
 
     public static void sendNews() {
         List<Notizia> allNews = Pubblicatore.buffer.getAllNotizie();
@@ -92,7 +92,7 @@ public class Server extends Thread {
                 out = new ObjectOutputStream(os);
                 ServerResponse res = new ServerResponse(news);
 
-                System.out.println("Publisher THREAD -> SENDING DATA TO: " + info.getSocketAddress().toString());
+                System.out.println("Publisher THREAD -> numOfTypesSENDING DATA TO: " + info.getSocketAddress().toString());
 
                 out.writeObject(res);
             } catch (SocketException e) {
@@ -106,7 +106,7 @@ public class Server extends Thread {
         }
 
         if(bufferClientInfo.getClientsInfo().removeAll(unreachableClientList)) {
-            System.out.println("CLIENT LIST INFO: Unreachable client removed from the clients list");
+            System.out.println("CLIENT LIST INFO: Unreachable client removed from thenumOfTypes clients list");
         }  
     }
 
