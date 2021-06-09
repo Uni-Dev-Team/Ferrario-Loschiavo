@@ -65,12 +65,12 @@ public class Notizia implements Serializable {
 
         // Randomly create sentence
         for ( int j = 0; j < 1; j++ ) {
-            int articles1 = Pubblicatore.RAND.nextInt(articles.length);
-            int nouns1 = Pubblicatore.RAND.nextInt(nouns.length);
-            int verbs1 = Pubblicatore.RAND.nextInt(verbs.length);
-            int prepositions1 = Pubblicatore.RAND.nextInt(prepositions.length);
-            int articles2 = Pubblicatore.RAND.nextInt(articles.length);
-            int nouns2 = Pubblicatore.RAND.nextInt(nouns.length);
+            int articles1 = rand.nextInt(articles.length);
+            int nouns1 = rand.nextInt(nouns.length);
+            int verbs1 = rand.nextInt(verbs.length);
+            int prepositions1 = rand.nextInt(prepositions.length);
+            int articles2 = rand.nextInt(articles.length);
+            int nouns2 = rand.nextInt(nouns.length);
 
             StringBuilder buffer = new StringBuilder();
             // Concatenate words and add period

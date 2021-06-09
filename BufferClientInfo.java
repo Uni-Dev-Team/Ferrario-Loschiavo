@@ -26,8 +26,12 @@ class BufferClientInfo {
     public synchronized void setItem(SocketAddress address, Notizia.Tipo newType) {
         for(ClientInfo info: clientsInfo) {
             if(address.equals(info.getSocketAddress())) {
-                System.out.println("SOCKETADDRESS EQUALS");
                 info.addType(newType);
+                System.out.print("List of types after ADD: ");
+                for(Notizia.Tipo type: info.getNewsTypes()) {
+                    System.out.print(type.toString() + " ");
+                }
+                System.out.println("\n");
             }
         }
     }
