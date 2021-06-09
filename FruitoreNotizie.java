@@ -48,7 +48,7 @@ public class FruitoreNotizie {
 
                         List<Notizia.Tipo> types = new ArrayList<Notizia.Tipo>();
                         int numOfTypes = rand.nextInt(4) + 1;
-                        for(int i = 0; i < numOfTypes; i++) {
+                        for(int i = 0; i < /*numOfTypes*/2; i++) {
                             Notizia.Tipo pickedType;
                             do {
                                 pickedType = Notizia.getRandomType();
