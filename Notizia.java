@@ -1,8 +1,9 @@
-import java.util.Arrays;
-import java.util.Optional;
 import java.io.Serializable;
+import java.util.*;
 
 public class Notizia implements Serializable {
+
+    private static Random rand = new Random();
 
     public static enum Tipo {
         POLITICA(0),
@@ -50,7 +51,7 @@ public class Notizia implements Serializable {
     public Notizia(){}
 
     public static Tipo getRandomType() {
-        Tipo type = Tipo.valueFromInt(Pubblicatore.RAND.nextInt(Tipo.getSize())).get();
+        Tipo type = Tipo.valueFromInt(rand.nextInt(Tipo.getSize())).get();
         return type;
     }
 
