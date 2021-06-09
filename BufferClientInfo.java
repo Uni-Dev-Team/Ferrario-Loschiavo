@@ -1,3 +1,6 @@
+import java.io.*;
+import java.net.*;
+import java.util.*;
 
 class BufferClientInfo {
     private List<ClientInfo> clientsInfo;
@@ -13,12 +16,12 @@ class BufferClientInfo {
     }
 
     public synchronized void removeItem(ClientInfo info) {
-        if(clientsInfo.contains(info)) clientInfo.remove(info);
+        if(clientsInfo.contains(info)) clientsInfo.remove(info);
     }
 
     public synchronized void setItem(SocketAddress address, Notizia.Tipo newType) {
         for(ClientInfo info: clientsInfo) {
-            if(address.getSocketAddress() == info.getSocketAddress()) {
+            if(address == info.getSocketAddress()) {
                 System.out.println("SOCKETADDRESS EQUALS");
                 info.addType(newType);
             }

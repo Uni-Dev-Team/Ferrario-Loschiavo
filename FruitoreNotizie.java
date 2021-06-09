@@ -91,17 +91,14 @@ public class FruitoreNotizie {
                 System.err.println("Error: IPv4 given addres isn't valid");
             }
         } else {
-                System.err.    try {
-                    response = (ServerResponse) in.readObject();
-                } catch(ClassNotFoundException e) {}
-                if (response != null) {
-                    System.out.println(response.toString());
-                }println("Error: Check documentation for more details");
-            }
-
-        /*} catch(SocketException e) {
-            System.out.println("Il server ha chiuso la connessione.");
-        }*/
+            System.err.println("Error: Check documentation for more details");
+            /*try {
+                response = (ServerResponse) in.readObject();
+            } catch(ClassNotFoundException e) {}
+            if (response != null) {
+                System.out.println(response.toString());
+            }println("Error: Check documentation for more details");*/
+        }
     }
 
 
