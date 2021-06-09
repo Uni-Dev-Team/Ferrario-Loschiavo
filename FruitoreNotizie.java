@@ -2,13 +2,12 @@ import java.io.*;
 import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class Client {
-    public static ClientInfo info;
+public class FruitoreNotizie {
+    public static ClientRequest req;
     static int PORT;
     static String IP;
     public static void main(String[] args) {
@@ -32,13 +31,18 @@ public class Client {
                         OutputStream outToServer = s1.getOutputStream();
                         ObjectOutputStream out = new ObjectOutputStream(outToServer);
     
-    
-                        List<Notizia.Tipo> types = new ArrayList<Notizia.Tipo>();
-                        types.add(Notizia.Tipo.ATTUALITA);
-                        types.add(Notizia.Tipo.POLITICA);
-                        info = new ClientInfo(types, s1.getLocalSocketAddress());
-                        out.writeObject(info);
-    
+                        //List<Notizia.Tipo> types = new ArrayList<Notizia.Tipo>();
+                        //types.add(Notizia.Tipo.ATTUALITA);
+                        //types.add(Notizia.Tipo.POLITICA);
+
+                        //for(Notizia.Tipo type: types) {
+                        //  info = new ClientInfo(type, s1.getLocalSocketAddress());
+                        //  out.writeObject(info);
+                        //}
+ 
+                        req= new ClientRequest(true, Notizia.Tipo.POLITICA, s1.getLocalSocketAddress());
+                        out.writeObject(req);
+
                         InputStream inFromServer;
                         ObjectInputStream in;
     

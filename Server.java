@@ -3,11 +3,13 @@ import java.net.*;
 import java.util.*;
 
 public class Server extends Thread {
+
     private ServerSocket serverSocket;
     private static List<ClientInfo> clientList = new ArrayList<ClientInfo>();
     private static List<ClientInfo> unreachableClientList = new ArrayList<ClientInfo>();
     private static Pubblicatore publisher;
     private final InetAddress ipAddress = InetAddress.getLocalHost();
+
     public void run() {
         while(true) {
             try {
@@ -16,21 +18,28 @@ public class Server extends Thread {
                 
                 System.out.println("Server info: Just connected: " + server.getRemoteSocketAddress());
                 ObjectInputStream in = new ObjectInputStream(server.getInputStream());
-                ClientInfo newClient = null;
+                ClientRequest newRequest = null;
+
                 try {
-                    newClient = (ClientInfo) in.readObject();
-                    newClient.setSocket(server);
+                    newRequest = (ClientRequest) in.readObject();
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
-                
+
+                List<Notizia.Tipo> newsTypes = new ArrayList<Notizia.Tipo>();
+                newsTypes.add(newRequest.getType());
+                ClientInfo newClient = new ClientInfo(newsTypes, server, newRequest.getSocketAddress());
+
                 if (!isClientPresent(newClient)) {
                     clientList.add(newClient);
                 }
+
                 System.out.println("Server info: \n<< Client Connected List: >>");
+
                 for (ClientInfo clientInfo : clientList) {
                     System.out.println(clientInfo);
                 }
+
             } catch (SocketTimeoutException e) {
                 System.err.println("Server error: Socket timed out!");
                 break;
@@ -78,29 +87,25 @@ public class Server extends Thread {
                 os = info.getSocket().getOutputStream();
                 out = new ObjectOutputStream(os);
                 ServerResponse res = new ServerResponse(news);
+
+                System.out.println("SENDING DATA TO: " + info.getSocketAddress().toString());
+
                 out.writeObject(res);
             } catch (SocketException e) {
                 System.err.println("\n\n<*******>\n"+ info + "is unreachable it will be removed from the client list\n <********>\n\n");
-                clientList.add(info);
+                unreachableClientList.add(info);
             }
              catch (IOException e) {
                 System.err.println("Server error:");
                 e.printStackTrace();
             }
         }
-        /* TODO: Trovare un modo per modificare la lista senza far crashare il server: 
-        Exception in thread "Thread-0" java.util.ConcurrentModificationException
-        at java.base/java.util.ArrayList$Itr.checkForComodification(ArrayList.java:1043)
-        at java.base/java.util.ArrayList$Itr.next(ArrayList.java:997)
-        at Server.sendNews(Server.java:73)
-         at Pubblicatore.run(Pubblicatore.java:22)*/
 
-
-        // // if(clientList.removeAll(unreachableClientList)) {
-        //     System.out.println("\n\n<*******>\nUnreachable client removed from the clients list\n <********>\n\n");
-        // } else {
-        //     System.out.println("\n\n<*******>\nNo Unreachable clients to remove\n <********>\n\n");
-        // }
+        if(clientList.removeAll(unreachableClientList)) {
+            System.out.println("\n\n<*******>\nUnreachable client removed from the clients list\n <********>\n\n");
+        } else {
+            System.out.println("\n\n<*******>\nNo Unreachable clients to remove\n <********>\n\n");
+        }
         
        
     }
@@ -129,5 +134,58 @@ public class Server extends Thread {
 
       // Thread pubblicatore parte con la sua attività
       publisher.start();
+    }
+}
+
+class ClientInfo {
+    private List<Notizia.Tipo> newsTypes;
+    private Socket socket;
+    private SocketAddress socketAddress;
+
+    public ClientInfo(List<Notizia.Tipo> types, Socket socket, SocketAddress socketAddress) {
+        this.newsTypes = new ArrayList<Notizia.Tipo>();
+        for(Notizia.Tipo type: types) newsTypes.add(type);
+        this.socket = socket;
+        this.socketAddress = socketAddress;
+    }
+
+    public List<Notizia.Tipo> getNewsTypes() {
+        return this.newsTypes;
+    }
+
+    public Socket getSocket() {
+        return this.socket;
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+
+    public SocketAddress getSocketAddress() {
+        return this.socketAddress;
+    }
+
+    public void setSocketAddress(SocketAddress socketAddress) {
+        this.socketAddress = socketAddress;
+    }
+
+    public void addType(Notizia.Tipo newType) {
+        if(!newsTypes.contains(newType)) newsTypes.add(newType);
+    };
+
+    public void removeType(Notizia.Tipo type) {
+        if(newsTypes.contains(type)) newsTypes.remove(type);
+    }
+
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append("Tipologie: [");
+        for(int i = 0; i < newsTypes.size(); i++) {
+            result.append(newsTypes.get(i));
+            result.append(i == newsTypes.size()-1 ? "" : ",");
+        }
+
+        result.append("]\n\n");
+        return result.toString();
     }
 }
