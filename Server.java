@@ -1,8 +1,6 @@
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class Server extends Thread {
 
@@ -39,11 +37,11 @@ public class Server extends Thread {
                 serverThread.setName("THREAD: "+newClient.getSocketAddress().toString());
                 // serversThreads.add(serverThread);
 
-                System.out.println("Server info: \n<< Client Connected List: >>");
-
+                System.out.println("\nClient List: \n<< Client Connected List: >>");
                 for (ClientInfo clientInfo : clientList) {
                     System.out.println(clientInfo);
                 }
+                System.out.println("<< End of the list >>\n");
 
             } catch (SocketTimeoutException e) {
                 System.err.println("Server error: Socket timed out!");
@@ -214,13 +212,14 @@ class ClientInfo {
 
     public String toString() {
         StringBuilder result = new StringBuilder();
+        result.append("Socket: " + this.getSocketAddress()+ "\n");
         result.append("Tipologie: [");
         for(int i = 0; i < newsTypes.size(); i++) {
             result.append(newsTypes.get(i));
             result.append(i == newsTypes.size()-1 ? "" : ",");
         }
 
-        result.append("]\n\n");
+        result.append("]\n");
         return result.toString();
     }
 }
