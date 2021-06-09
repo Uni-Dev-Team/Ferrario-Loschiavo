@@ -32,8 +32,8 @@ Lo spazio di lavoro contiene:
 - `Pubblicatore.java` : Programma (Thread) che invia ogni 5 secondi le notizie presenti nel BufferNotizie ad ogni client connesso e contiene i Thread ProduttoreNotizie responsabili per la generazione di notizie
 
 ## Tutorial
-Istruzioni per la compilazione ed esecuzione del programma
-Il programma è stato testato su Windows & Linux Ubuntu sotto una rete LAN. (Sia sulla stessa macchina che su macchine diverse)
+Istruzioni per la compilazione ed esecuzione del programma.  
+Il programma è stato testato su Windows & Linux Ubuntu sotto una rete LAN. (Sia sulla stessa macchina che su macchine diverse)  
 Il programma è stato testato utlizzando `OpenJDK 11.0.11`
     
 ### Compilazione
@@ -51,11 +51,11 @@ Il programma è stato testato utlizzando `OpenJDK 11.0.11`
 ### Esecuzione 
 - Linux & Windows
     - Server: 
-        1. Aprire un'istanza del Terminale (Linux) | Powershell (Windows)
-        2. Navigare fino alla directory del progetto (Ferrario-Loschiavo)
-        3. Esegurie il comando ``` java Server <PORTA> ``` (e.g.: ``` java Server 1234 ```) per avviare il server
+    1. Aprire un'istanza del Terminale (Linux) | Powershell (Windows)
+    2. Navigare fino alla directory del progetto (Ferrario-Loschiavo)
+    3. Esegurie il comando ``` java Server <PORTA> ``` (e.g.: ``` java Server 1234 ```) per avviare il server
 
-        **N.B** ``` <PORTA> ``` La porta deve essere inclusa dalla 1024 a 65535 e deve essere uguale a quella utilizzata dal client
+    **N.B** ``` <PORTA> ``` La porta deve essere inclusa dalla 1024 a 65535 e deve essere uguale a quella utilizzata dal client
 
     
     - Client:
