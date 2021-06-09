@@ -27,7 +27,7 @@ The workspace contains:
 - `ClientRequest.java` : Oggetto richiesta utilizzato dal client per aggiungere una tipologia di notizia a quelle che si desidererebbe ricevere o rimuovere.
 - `ServerResponse.java` : Oggetto risposta utilizzato dal server per inviare le notizie prodotte ai FuritoriNotizie connessi (CLIENTS)
 
-# Other files
+### Other files
 - `Notizia.java` : Oggetto che contiene il contenuto e tipologia della notizia
 - `Pubblicatore.java` : Programma (Thread) che invia ogni 5 secondi le notizie presenti nel BufferNotizie ad ogni client connesso e contiene i Thread ProduttoriNotizie responsabili per la generazione di notizie
 
