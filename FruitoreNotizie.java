@@ -4,6 +4,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.net.*;
 
 
 public class FruitoreNotizie {
@@ -11,6 +12,8 @@ public class FruitoreNotizie {
     static int PORT;
     static String IP;
     public static void main(String[] args) {
+
+        //try {
         if (args.length == 2) {
             if (isIPv4Valid(args[0])) {
                 IP = args[0];
@@ -54,13 +57,19 @@ public class FruitoreNotizie {
 
                         while(true) {
                             inFromServer = s1.getInputStream();
-                            in = new ObjectInputStream(inFromServer);
-                            ServerResponse response = null;
+
                             try {
-                                response = (ServerResponse) in.readObject();
-                            } catch(ClassNotFoundException e) {}
-                            if (response != null) {
-                                System.out.println(response.toString());
+                                in = new ObjectInputStream(inFromServer);
+                                ServerResponse response = null;
+                                try {
+                                    response = (ServerResponse) in.readObject();
+                                } catch(ClassNotFoundException e) {}
+                                if (response != null) {
+                                    System.out.println(response.toString());
+                                }
+                            } catch(SocketException e) {
+                                System.out.println("Connection closed by the server.");
+                                System.exit(0);
                             }
                         }
     
@@ -84,6 +93,10 @@ public class FruitoreNotizie {
         } else {
                 System.err.println("Error: Check documentation for more details");
             }
+
+        /*} catch(SocketException e) {
+            System.out.println("Il server ha chiuso la connessione.");
+        }*/
     }
 
 
