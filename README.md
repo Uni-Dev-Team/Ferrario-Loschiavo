@@ -51,17 +51,17 @@ Il programma è stato testato utlizzando `OpenJDK 11.0.11`
 ### Esecuzione 
 - Linux & Windows
     - Server: 
-1. Aprire un'istanza del Terminale (Linux) | Powershell (Windows)
-2. Navigare fino alla directory del progetto (Ferrario-Loschiavo)
-3. Eseguire il comando ``` java Server <PORTA> ``` (e.g.: ``` java Server 1234 ```) per avviare il server
+    1. Aprire un'istanza del Terminale (Linux) | Powershell (Windows)
+    2. Navigare fino alla directory del progetto (Ferrario-Loschiavo)
+    3. Eseguire il comando ``` java Server <PORTA> ``` (e.g.: ``` java Server 1234 ```) per avviare il server
 
-**N.B** ``` <PORTA> ``` La porta deve essere inclusa dalla 1024 a 65535 e deve essere uguale a quella utilizzata dal client
+    **N.B** ``` <PORTA> ``` La porta deve essere inclusa dalla 1024 a 65535 e deve essere uguale a quella utilizzata dal client
 
     
     - Client:
-1. Aprire un'istanza del Terminale (Linux) | Powershell (Windows) per ogni singolo client
-2. Navigare fino alla directory del progetto (Ferrario-Loschiavo)
-3. Esegurie il comando ``` java FruitoreNotizie <Indirizzo IPv4> <PORT> ``` (e.g.: ``` java FruitoreNotizie 127.0.0.1 1234 ```) per avviare e far connettere il client al server e iniziare a ricevere notizie
+    1. Aprire un'istanza del Terminale (Linux) | Powershell (Windows) per ogni singolo client
+    2. Navigare fino alla directory del progetto (Ferrario-Loschiavo)
+    3. Esegurie il comando ``` java FruitoreNotizie <Indirizzo IPv4> <PORT> ``` (e.g.: ``` java FruitoreNotizie 127.0.0.1 1234 ```) per avviare e far connettere il client al server e iniziare a ricevere notizie
 
 **N.B.** ``` <PORTA> ``` La porta deve essere inclusa dalla 1024 a 65535 e deve essere uguale a quella utilizzata dal server
         
