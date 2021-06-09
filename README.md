@@ -31,7 +31,7 @@ Lo spazio di lavoro contiene:
 - `Notizia.java` : Oggetto che contiene il contenuto e tipologia della notizia
 - `Pubblicatore.java` : Programma (Thread) che invia ogni 5 secondi le notizie presenti nel BufferNotizie ad ogni client connesso e contiene i Thread ProduttoreNotizie responsabili per la generazione di notizie
 
-## Tutorial
+## Istruzioni
     Istruzioni per la compilazione ed esecuzione del programma
     Il programma è stato testato su Windows & Linux Ubuntu sotto una rete LAN. (Sia sulla stessa macchina che su macchine diverse)
     Il programma è stato testato utlizzando `OpenJDK 11.0.11`
