@@ -57,15 +57,21 @@ public class FruitoreNotizie {
                         }
 
                         System.out.print("Fruitore ha scelto tipologie: ");
-                        for(Notizia.Tipo type: types) {
-                            System.out.print(type.toString()+" ");
+                        if(types.size() > 0) {
+                            req = new ClientRequest(true, types.get(0), s1.getLocalSocketAddress());
+                            out.writeObject(req);
+                            System.out.print(types.get(0).toString() + " ");
+
                             outToServer = s1.getOutputStream();
                             out = new ObjectOutputStream(outToServer);
 
-                            req = new ClientRequest(true, type, s1.getLocalSocketAddress());
-                            out.writeObject(req);
+                            for(int i = 1; i < types.size(); i++) {
+                                req = new ClientRequest(true, types.get(i), s1.getLocalSocketAddress());
+                                out.writeObject(req);
+                                out.reset();
+                                System.out.print(types.get(i).toString() + " ");
+                            }
                         }
-                        System.out.println("\n");
 
                         InputStream inFromServer;
                         ObjectInputStream in;
