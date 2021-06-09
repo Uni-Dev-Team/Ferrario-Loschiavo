@@ -38,14 +38,14 @@ Il programma è stato testato utlizzando `OpenJDK 11.0.11`
     
 ### Compilazione
 - Linux
-    1. Aprire un'istanza del Terminale
-    2. Navigare fino alla directory del progetto (Ferrario-Loschiavo)
-    3. Esegure il seguente comando: ``` javac *.java ```
+1. Aprire un'istanza del Terminale
+2. Navigare fino alla directory del progetto (Ferrario-Loschiavo)
+3. Esegure il seguente comando: ``` javac *.java ```
 
 - Windows
-    1. Aprire un'istanza della PowerShell
-    2. Navigare fino alla directory del progetto (Ferrario-Loschiavo)
-    3. Esegure il seguente comando: ``` javac *.java ```
+1. Aprire un'istanza della PowerShell
+2. Navigare fino alla directory del progetto (Ferrario-Loschiavo)
+3. Esegure il seguente comando: ``` javac *.java ```
 
 
 ### Esecuzione 
