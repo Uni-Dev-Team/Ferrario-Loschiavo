@@ -27,11 +27,6 @@ class BufferClientInfo {
         for(ClientInfo info: clientsInfo) {
             if(address.equals(info.getSocketAddress())) {
                 info.addType(newType);
-                System.out.print("List of types after ADD: ");
-                for(Notizia.Tipo type: info.getNewsTypes()) {
-                    System.out.print(type.toString() + " ");
-                }
-                System.out.println("\n");
             }
         }
     }

@@ -15,7 +15,6 @@ public class Server extends Thread {
         // this.setName("SERVER MAIN THREAD");
         while(true) {
             try {
-                System.out.println("Server info: Waiting for client on port: " + serverSocket.getLocalPort());
                 Socket server = serverSocket.accept();
                 
                 System.out.println("Server info: Just connected: " + server.getRemoteSocketAddress());
