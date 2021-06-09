@@ -31,8 +31,11 @@ public class FruitoreNotizie {
                         System.out.println("Connected" + s1.getRemoteSocketAddress());
     
                         // Formatti la richiesta che fai al server
-                        OutputStream outToServer;
-                        ObjectOutputStream out;
+                        // OutputStream outToServer;
+                        // ObjectOutputStream out;
+
+                        OutputStream outToServer = s1.getOutputStream();
+                        ObjectOutputStream out = new ObjectOutputStream(outToServer);
 
                         //List<Notizia.Tipo> types = new ArrayList<Notizia.Tipo>();
                         //types.add(Notizia.Tipo.ATTUALITA);
@@ -56,11 +59,12 @@ public class FruitoreNotizie {
                         System.out.print("Fruitore ha scelto tipologie: ");
                         for(Notizia.Tipo type: types) {
                             System.out.print(type.toString()+" ");
-                            outToServer = s1.getOutputStream();
-                            out = new ObjectOutputStream(outToServer);
+                            // outToServer = s1.getOutputStream();
+                            // out = new ObjectOutputStream(outToServer);
 
                             req = new ClientRequest(true, type, s1.getLocalSocketAddress());
                             out.writeObject(req);
+                            out.reset();
                             try { Thread.sleep(500); } catch(InterruptedException e) {}
                         }
                         System.out.println("\n");
