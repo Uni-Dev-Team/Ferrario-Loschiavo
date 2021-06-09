@@ -59,9 +59,9 @@ public class Notizia implements Serializable {
         StringBuilder content = new StringBuilder();
 
         String[] articles = { "the ", "a ", "one ", "some ", "any " };
-        String[] nouns = {"boy","dog","car","bicycle"};
-        String[] verbs = {"ran","jumped","sansg","moves"};
-        String[] prepositions = {"away","towards","around","near"};
+        String[] nouns = {"boy ","dog ","car ","bicycle "};
+        String[] verbs = {"ran ","jumped ","sang ","moves "};
+        String[] prepositions = {"away ","towards ","around ","near "};
 
         // Randomly create sentence
         for ( int j = 0; j < 1; j++ ) {
