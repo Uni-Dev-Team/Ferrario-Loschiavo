@@ -26,12 +26,13 @@ public class Server extends Thread {
                     e.printStackTrace();
                 }
 
-                List<Notizia.Tipo> newsTypes = new ArrayList<Notizia.Tipo>();
-                newsTypes.add(newRequest.getType());
-                ClientInfo newClient = new ClientInfo(newsTypes, server, newRequest.getSocketAddress());
-
-                if (!isClientPresent(newClient)) {
+                if (!isClientPresent(newRequest.getSocketAddress())) {
+                    List<Notizia.Tipo> newsTypes = new ArrayList<Notizia.Tipo>();
+                    newsTypes.add(newRequest.getType());
+                    ClientInfo newClient = new ClientInfo(newsTypes, server, newRequest.getSocketAddress());
                     clientList.add(newClient);
+                } else {
+                    System.out.println("RICHIESTA DA CLIENT GIA' COLLEGATO");
                 }
 
                 System.out.println("Server info: \n<< Client Connected List: >>");
@@ -104,16 +105,16 @@ public class Server extends Thread {
         if(clientList.removeAll(unreachableClientList)) {
             System.out.println("\n\n<*******>\nUnreachable client removed from the clients list\n <********>\n\n");
         } else {
-            System.out.println("\n\n<*******>\nNo Unreachable clients to remove\n <********>\n\n");
+           //  System.out.println("\n\n<*******>\nNo Unreachable clients to remove\n <********>\n\n");
         }
         
        
     }
 
-    private Boolean isClientPresent(ClientInfo newClient) {
+    private Boolean isClientPresent(SocketAddress sAddress) {
         Boolean resl = false;
         for (ClientInfo client : clientList) {
-            if (client.equals(newClient)) {
+            if (client.getSocketAddress().equals(sAddress)) {
                 resl = true;
                 break;
             }
