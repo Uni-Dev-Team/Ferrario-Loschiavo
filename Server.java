@@ -5,7 +5,7 @@ import java.util.*;
 public class Server extends Thread {
 
     private ServerSocket serverSocket;
-    private static BufferClientInfo bufferClientInfo = new BufferClientInfo();
+    public static BufferClientInfo bufferClientInfo = new BufferClientInfo();
     private static List<ClientInfo> clientList = new ArrayList<ClientInfo>();
     private static List<ClientInfo> unreachableClientList = new ArrayList<ClientInfo>();
     private static Pubblicatore publisher;
@@ -153,7 +153,7 @@ class ServeOneFruitore extends Thread {
                 if(req.getEditFlag()) {
                     // Aggiungi tipo specificato
                     System.out.println(this.getName() + " RICHIESTA: " + req.getSocketAddress().toString() + " vuole AGGIUNGERE il tipo " + req.getType().toString());
-                    bufferClientInfo.setItem(req.getSocketAddress(), req.getType());
+                    Server.bufferClientInfo.setItem(req.getSocketAddress(), req.getType());
                 } else {
                     // Rimuovi tipo specificato
                     System.out.println(this.getName() +" RICHIESTA: " + req.getSocketAddress().toString() + " vuole RIMUOVERE il tipo " + req.getType().toString());
