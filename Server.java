@@ -160,10 +160,12 @@ class ServeOneFruitore extends Thread {
         }catch(SocketException e) {
             System.out.println(this.getName()+" CLIENT DISCONNECTED: THREAD KILLED");
             Server.bufferClientInfo.removeItem(clientInfo);
+                e.printStackTrace();
             this.interrupt();
         } catch(IOException e) {
             System.out.println(this.getName()+" CLIENT DISCONNECTED: THREAD KILLED");
             Server.bufferClientInfo.removeItem(clientInfo);
+            e.printStackTrace();
             this.interrupt();
         } catch(ClassNotFoundException e) {
             e.printStackTrace();
