@@ -34,8 +34,8 @@ public class Server extends Thread {
                 clientList.add(newClient);
 
                 ServeOneFruitore serverThread = new ServeOneFruitore(newClient);
-                serverThread.start();
-                serversThreads.add(serverThread);
+                serverThread.setName("THREAD FRUITORE SERVER");
+                // serversThreads.add(serverThread);
 
                 System.out.println("Server info: \n<< Client Connected List: >>");
 
@@ -137,36 +137,40 @@ class ServeOneFruitore extends Thread {
     private ObjectOutputStream out;
 
     public ServeOneFruitore(ClientInfo cInfo) {
-        this.socket = cInfo.getSocket();
         this.clientInfo = cInfo;
+        this.socket = clientInfo.getSocket();
         try {
             in = new ObjectInputStream(socket.getInputStream());
-            out = new ObjectOutputStream(socket.getOutputStream());
+            // out = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            System.out.println("ERRORE IOEXCEPTION");
+            System.exit(0);
         }
 
+        this.start();
     }
 
     public void run() {
-        try {
+        //try {
             while(true) {
-                ClientRequest req = (ClientRequest) in.readObject();
-
-                if(req.getEditFlag()) {
-                    // Aggiungi tipo specificato
-                    System.out.println("RICHIESTA: " + req.getSocketAddress().toString() + " vuole AGGIUNGERE il tipo " + req.getType().toString());
-                } else {
-                    // Rimuovi tipo specificato
-                    System.out.println("RICHIESTA: " + req.getSocketAddress().toString() + " vuole RIMUOVERE il tipo " + req.getType().toString());
-                }
+                System.out.println("Listening for requests..");
+                //ClientRequest req = (ClientRequest) in.readObject();
+//
+                //if(req.getEditFlag()) {
+                //    // Aggiungi tipo specificato
+                //    System.out.println("RICHIESTA: " + req.getSocketAddress().toString() + " vuole AGGIUNGERE il tipo " + req.getType().toString());
+                //} else {
+                //    // Rimuovi tipo specificato
+                //    System.out.println("RICHIESTA: " + req.getSocketAddress().toString() + " vuole RIMUOVERE il tipo " + req.getType().toString());
+                //}
             }
-        } catch(IOException e) {
+        /*} catch(IOException e) {
             e.printStackTrace();
         } catch(ClassNotFoundException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }
 

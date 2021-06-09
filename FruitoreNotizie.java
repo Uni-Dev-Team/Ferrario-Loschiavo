@@ -42,7 +42,10 @@ public class FruitoreNotizie {
  
                         req = new ClientRequest(true, Notizia.Tipo.POLITICA, s1.getLocalSocketAddress());
                         out.writeObject(req);
-                        req = new ClientRequest(false, Notizia.Tipo.POLITICA, s1.getLocalSocketAddress());
+
+                        out.flush();
+
+                        req = new ClientRequest(false, Notizia.Tipo.ATTUALITA, s1.getLocalSocketAddress());
                         out.writeObject(req);
 
                         InputStream inFromServer;
@@ -58,8 +61,6 @@ public class FruitoreNotizie {
                             if (response != null) {
                                 System.out.println(response.toString());
                             }
-
-
                         }
     
                         // inFromServer.close();
