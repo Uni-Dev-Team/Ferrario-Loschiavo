@@ -63,7 +63,7 @@ public class Notizia implements Serializable {
         String[] prepositions = {"away","towards","around","near"};
 
         // Randomly create sentence
-        for ( int j = 0; j < 5; j++ ) {
+        for ( int j = 0; j < 1; j++ ) {
             int articles1 = Pubblicatore.RAND.nextInt(articles.length);
             int nouns1 = Pubblicatore.RAND.nextInt(nouns.length);
             int verbs1 = Pubblicatore.RAND.nextInt(verbs.length);

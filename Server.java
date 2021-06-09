@@ -1,6 +1,8 @@
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Server extends Thread {
 
@@ -34,7 +36,7 @@ public class Server extends Thread {
                 clientList.add(newClient);
 
                 ServeOneFruitore serverThread = new ServeOneFruitore(newClient);
-                serverThread.setName("THREAD FRUITORE SERVER");
+                serverThread.setName("THREAD: "+newClient.getSocketAddress().toString());
                 // serversThreads.add(serverThread);
 
                 System.out.println("Server info: \n<< Client Connected List: >>");
@@ -91,11 +93,11 @@ public class Server extends Thread {
                 out = new ObjectOutputStream(os);
                 ServerResponse res = new ServerResponse(news);
 
-                System.out.println("SENDING DATA TO: " + info.getSocketAddress().toString());
+                System.out.println("Publisher THREAD -> SENDING DATA TO: " + info.getSocketAddress().toString());
 
                 out.writeObject(res);
             } catch (SocketException e) {
-                System.err.println("\n\n<*******>\n"+ info + "is unreachable it will be removed from the client list\n <********>\n\n");
+                System.err.println("CLIENT LIST INFO: "+ info.getSocketAddress() + "is unreachable it will be removed from the client list");
                 unreachableClientList.add(info);
             }
              catch (IOException e) {
@@ -105,9 +107,7 @@ public class Server extends Thread {
         }
 
         if(clientList.removeAll(unreachableClientList)) {
-            System.out.println("\n\n<*******>\nUnreachable client removed from the clients list\n <********>\n\n");
-        } else {
-           //  System.out.println("\n\n<*******>\nNo Unreachable clients to remove\n <********>\n\n");
+            System.out.println("CLIENT LIST INFO: Unreachable client removed from the clients list");
         }
         
        
@@ -134,43 +134,41 @@ class ServeOneFruitore extends Thread {
     Socket socket;
     ClientInfo clientInfo;
     private ObjectInputStream in;
-    private ObjectOutputStream out;
 
     public ServeOneFruitore(ClientInfo cInfo) {
         this.clientInfo = cInfo;
         this.socket = clientInfo.getSocket();
         try {
             in = new ObjectInputStream(socket.getInputStream());
-            // out = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
-            System.out.println("ERRORE IOEXCEPTION");
-            System.exit(0);
         }
 
         this.start();
     }
 
     public void run() {
-        //try {
+        try {
             while(true) {
-                System.out.println("Listening for requests..");
-                //ClientRequest req = (ClientRequest) in.readObject();
-//
-                //if(req.getEditFlag()) {
-                //    // Aggiungi tipo specificato
-                //    System.out.println("RICHIESTA: " + req.getSocketAddress().toString() + " vuole AGGIUNGERE il tipo " + req.getType().toString());
-                //} else {
-                //    // Rimuovi tipo specificato
-                //    System.out.println("RICHIESTA: " + req.getSocketAddress().toString() + " vuole RIMUOVERE il tipo " + req.getType().toString());
-                //}
+                ClientRequest req = (ClientRequest) in.readObject();
+
+                if(req.getEditFlag()) {
+                    // Aggiungi tipo specificato
+                    System.out.println(this.getName() + " RICHIESTA: " + req.getSocketAddress().toString() + " vuole AGGIUNGERE il tipo " + req.getType().toString());
+                    
+                } else {
+                    // Rimuovi tipo specificato
+                    System.out.println(this.getName() +" RICHIESTA: " + req.getSocketAddress().toString() + " vuole RIMUOVERE il tipo " + req.getType().toString());
+                }
             }
-        /*} catch(IOException e) {
+        }catch(SocketException e) {
+            System.out.println(this.getName()+" CLIENT DISCONNECTED: THREAD KILLED");
+            this.interrupt();
+        } catch(IOException e) {
             e.printStackTrace();
         } catch(ClassNotFoundException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 }
 

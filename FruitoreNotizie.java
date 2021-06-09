@@ -46,12 +46,12 @@ public class FruitoreNotizie {
                         outToServer = s1.getOutputStream();
                         out = new ObjectOutputStream(outToServer);
 
-                        req = new ClientRequest(false, Notizia.Tipo.ATTUALITA, s1.getLocalSocketAddress());
+                        req = new ClientRequest(true, Notizia.Tipo.ATTUALITA, s1.getLocalSocketAddress());
                         out.writeObject(req);
 
                         InputStream inFromServer;
                         ObjectInputStream in;
-    
+
                         while(true) {
                             inFromServer = s1.getInputStream();
                             in = new ObjectInputStream(inFromServer);
