@@ -30,7 +30,7 @@ public class FruitoreNotizie {
                         // Formatti la richiesta che fai al server
                         OutputStream outToServer = s1.getOutputStream();
                         ObjectOutputStream out = new ObjectOutputStream(outToServer);
-    
+
                         //List<Notizia.Tipo> types = new ArrayList<Notizia.Tipo>();
                         //types.add(Notizia.Tipo.ATTUALITA);
                         //types.add(Notizia.Tipo.POLITICA);
@@ -42,8 +42,11 @@ public class FruitoreNotizie {
  
                         req = new ClientRequest(true, Notizia.Tipo.POLITICA, s1.getLocalSocketAddress());
                         out.writeObject(req);
+                        out.close();
+                        outToServer.close();
 
-                        out.flush();
+                        outToServer = s1.getOutputStream();
+                        out = new ObjectOutputStream(outToServer);
 
                         req = new ClientRequest(false, Notizia.Tipo.ATTUALITA, s1.getLocalSocketAddress());
                         out.writeObject(req);
