@@ -1,6 +1,4 @@
 import java.util.*;
-import java.net.*;
-import java.io.*;
 
 public class BufferNotizie {
     // Attributes of the Buffer

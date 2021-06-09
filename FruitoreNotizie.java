@@ -21,30 +21,18 @@ public class FruitoreNotizie {
                     PORT = Integer.parseInt(args[1]);
                 } catch (NumberFormatException e) {
                     System.err.println("Error: Number format not valid");
+                    System.exit(0);
                 }
-                if(PORT > 1023) {
+                if(PORT > 1023 && PORT < 65535) {
                     try {
                         System.out.println("Started connection");
                         // Crei il socket e gli passi l IP e la Porta
                         Socket s1 = new Socket(InetAddress.getByName(IP), PORT);
                         // Provi la connessione
                         System.out.println("Connected" + s1.getRemoteSocketAddress());
-    
-                        // Formatti la richiesta che fai al server
-                        // OutputStream outToServer;
-                        // ObjectOutputStream out;
 
                         OutputStream outToServer = s1.getOutputStream();
                         ObjectOutputStream out = new ObjectOutputStream(outToServer);
-
-                        //List<Notizia.Tipo> types = new ArrayList<Notizia.Tipo>();
-                        //types.add(Notizia.Tipo.ATTUALITA);
-                        //types.add(Notizia.Tipo.POLITICA);
-
-                        //for(Notizia.Tipo type: types) {
-                        //  info = new ClientInfo(type, s1.getLocalSocketAddress());
-                        //  out.writeObject(info);
-                        //}
 
                         List<Notizia.Tipo> types = new ArrayList<Notizia.Tipo>();
                         int numOfTypes = rand.nextInt(4) + 1;
@@ -72,6 +60,7 @@ public class FruitoreNotizie {
                                 System.out.print(types.get(i).toString() + " ");
                             }
                         }
+                        System.out.println("\n");
 
                         InputStream inFromServer;
                         ObjectInputStream in;
@@ -93,12 +82,6 @@ public class FruitoreNotizie {
                                 System.exit(0);
                             }
                         }
-    
-                        // inFromServer.close();
-                        // in.close();
-    
-                        // Chiudi la connessione
-                        // s1.close();
                     } catch(ConnectException e) {
                         System.err.println("Error: Unable to connect to the server. Check if the server is running on: \n-IP: " +args[0] + "\n-PORT: " + PORT );
                     }
@@ -113,12 +96,6 @@ public class FruitoreNotizie {
             }
         } else {
             System.err.println("Error: Check documentation for more details");
-            /*try {
-                response = (ServerResponse) in.readObject();
-            } catch(ClassNotFoundException e) {}
-            if (response != null) {
-                System.out.println(response.toString());
-            }println("Error: Check documentation for more details");*/
         }
     }
 

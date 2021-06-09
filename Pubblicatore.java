@@ -1,7 +1,4 @@
 import java.util.Random;
-import java.util.*;
-import java.net.*;
-import java.io.*;
 
 public class Pubblicatore extends Thread {
     static int BUFFSIZE = 4;
@@ -23,8 +20,11 @@ public class Pubblicatore extends Thread {
     public void run() {
         while(true) {
             Server.sendNews();
-            //buffer.printBuffer();
+
+            // Per controllare se il buffer viene riempito correttamente
+            //buffer.printBuffer();   
             buffer.resetBuffer();
+            // Per controllare se il buffer viene svuotato correttamente
             //buffer.printBuffer();
             try { Thread.sleep(5000); } catch(InterruptedException e) {}
         }

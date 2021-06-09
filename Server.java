@@ -6,13 +6,12 @@ public class Server extends Thread {
 
     private ServerSocket serverSocket;
     public static BufferClientInfo bufferClientInfo = new BufferClientInfo();
-    private static List<ClientInfo> clientList = new ArrayList<ClientInfo>();
     private static List<ClientInfo> unreachableClientList = new ArrayList<ClientInfo>();
     private static Pubblicatore publisher;
     private final InetAddress ipAddress = InetAddress.getLocalHost();
+    static int PORT;
 
     public void run() {
-        // this.setName("SERVER MAIN THREAD");
         while(true) {
             try {
                 Socket server = serverSocket.accept();
@@ -35,7 +34,6 @@ public class Server extends Thread {
 
                 ServeOneFruitore serverThread = new ServeOneFruitore(newClient);
                 serverThread.setName("THREAD: "+newClient.getSocketAddress().toString());
-                // serversThreads.add(serverThread);
 
                 System.out.println("\nClient List: \n<< Client Connected List: >>");
                 for (ClientInfo clientInfo : bufferClientInfo.getClientsInfo()) {
@@ -99,8 +97,7 @@ public class Server extends Thread {
                 unreachableClientList.add(info);
             }
              catch (IOException e) {
-                System.err.println("Server error:");
-                e.printStackTrace();
+                
             }
         }
 
@@ -111,17 +108,32 @@ public class Server extends Thread {
 
     // Main
     public static void main(String[] args) {
-        publisher = new Pubblicatore();
-        int port = 1234;
-      try {
-         Thread t = new Server(port);
-         t.start();
-      } catch (IOException e) {
-         e.printStackTrace();
-      }
+        if (args.length == 1) {
+            try {
+                PORT = Integer.parseInt(args[0]);
+            } catch (NumberFormatException e) {
+                System.err.println("Error: Number format not valid");
+                System.exit(0);
+            }
+            if (PORT > 1023 && PORT < 65535) {
+                publisher = new Pubblicatore();
+                
+            try {
+                Thread t = new Server(PORT);
+                t.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-      // Thread pubblicatore parte con la sua attività
-      publisher.start();
+            // Thread pubblicatore parte con la sua attività
+            publisher.start();
+            } else {
+                System.err.println("Error: Well Known Ports not supported. Use a port that is higher than 1023");
+            }
+            
+        }else {
+            System.err.println("Error: Check documentation for more details");
+        }
     }
 }
 
@@ -159,12 +171,10 @@ class ServeOneFruitore extends Thread {
         }catch(SocketException e) {
             System.out.println(this.getName()+" CLIENT DISCONNECTED: THREAD KILLED");
             Server.bufferClientInfo.removeItem(clientInfo);
-                e.printStackTrace();
             this.interrupt();
         } catch(IOException e) {
             System.out.println(this.getName()+" CLIENT DISCONNECTED: THREAD KILLED");
             Server.bufferClientInfo.removeItem(clientInfo);
-            e.printStackTrace();
             this.interrupt();
         } catch(ClassNotFoundException e) {
             e.printStackTrace();
