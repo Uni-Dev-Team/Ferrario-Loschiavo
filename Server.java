@@ -5,9 +5,9 @@ import java.util.*;
 public class Server extends Thread {
 
     private ServerSocket serverSocket;
+    private static BufferClientInfo bufferClientInfo = new BufferClientInfo();
     private static List<ClientInfo> clientList = new ArrayList<ClientInfo>();
     private static List<ClientInfo> unreachableClientList = new ArrayList<ClientInfo>();
-    private static List<ServeOneFruitore> serversThreads = new ArrayList<ServeOneFruitore>();
     private static Pubblicatore publisher;
     private final InetAddress ipAddress = InetAddress.getLocalHost();
 
@@ -31,7 +31,7 @@ public class Server extends Thread {
                 List<Notizia.Tipo> newsTypes = new ArrayList<Notizia.Tipo>();
                 newsTypes.add(newRequest.getType());
                 ClientInfo newClient = new ClientInfo(newsTypes, server, newRequest.getSocketAddress());
-                clientList.add(newClient);
+                bufferClientInfo.addItem(newClient);
 
                 ServeOneFruitore serverThread = new ServeOneFruitore(newClient);
                 serverThread.setName("THREAD: "+newClient.getSocketAddress().toString());
@@ -153,7 +153,7 @@ class ServeOneFruitore extends Thread {
                 if(req.getEditFlag()) {
                     // Aggiungi tipo specificato
                     System.out.println(this.getName() + " RICHIESTA: " + req.getSocketAddress().toString() + " vuole AGGIUNGERE il tipo " + req.getType().toString());
-                    
+                    bufferClientInfo.setItem(req.getSocketAddress(), req.getType());
                 } else {
                     // Rimuovi tipo specificato
                     System.out.println(this.getName() +" RICHIESTA: " + req.getSocketAddress().toString() + " vuole RIMUOVERE il tipo " + req.getType().toString());
