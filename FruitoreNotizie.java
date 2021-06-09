@@ -60,12 +60,10 @@ public class FruitoreNotizie {
                         for(Notizia.Tipo type: types) {
                             System.out.print(type.toString()+" ");
                             outToServer = s1.getOutputStream();
-                            // out = new ObjectOutputStream(outToServer);
+                            out = new ObjectOutputStream(outToServer);
 
                             req = new ClientRequest(true, type, s1.getLocalSocketAddress());
                             out.writeObject(req);
-                            out.reset();
-                            try { Thread.sleep(500); } catch(InterruptedException e) {}
                         }
                         System.out.println("\n");
 
