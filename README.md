@@ -1,4 +1,4 @@
-## Getting Started
+# Getting Started
 
 Progetto di Esame per Programmazione Concorrente e Distribuita
 
@@ -14,16 +14,16 @@ Progetto di Esame per Programmazione Concorrente e Distribuita
 
 The workspace contains:
 
-# Entry points
+### Entry points
 
 - `Server.java`: Entry point del Server (Pubblicatore)
 - `FruitoreNotizie.java`: Entry point del Client
 
-# Buffers
+### Buffers
 - `BufferNotizie.java` : Area di memoria condivisa, in cui viene gestita la concorrenza, che memorizza le notizie prodotte dai thread ProduttoriNotizie
 - `BufferClientInfo.java` : Area di memoria condivisa, in cui viene gestita la concorrenza, che memorizza le informazioni dei client connessi
 
-# Communication Objects
+### Communication Objects
 - `ClientRequest.java` : Oggetto richiesta utilizzato dal client per aggiungere una tipologia di notizia a quelle che si desidererebbe ricevere o rimuovere.
 - `ServerResponse.java` : Oggetto risposta utilizzato dal server per inviare le notizie prodotte ai FuritoriNotizie connessi (CLIENTS)
 
@@ -35,7 +35,7 @@ The workspace contains:
     Istruzioni per la compilazione ed esecuzione del programma
     Il programma e' stato testato su Windows & Linux Ubuntu sotto una rete LAN. (Sia sulla stessa macchina che su macchine diverse)
     Il programma e' stato testato utlizzando `OpenJDK 11.0.11`
-# Compilazione
+### Compilazione
     - Linux
         1. Aprire un'istanza del Terminale
         2. Navigare fino alla directory del progetto (Ferrario-Loschiavo)
@@ -47,7 +47,7 @@ The workspace contains:
         3. Esegure il seguente comando: ``` javac *.java ```
 
 
-# Esecuzione 
+### Esecuzione 
     - Linux & Windows
         - Server: 
             1. Aprire un'istanza del Terminale (Linux) | Powershell (Windows)
@@ -64,7 +64,7 @@ The workspace contains:
 
             *N.B.*``` <PORTA> ``` La porta deve essere inclusa dalla 1024 a 65535 e deve essere uguale a quella utilizzata dal server
         
-# Come ottenere l'indirizzo IPv4 del server
+## Come ottenere l'indirizzo IPv4 del server
     *Se si esegue su macchine diverse: *
     - Linux
         1. Esegurire il comando ``` ifconfig ``` sul terminale e cercare l'IPv4 che inizia con 192.168.X.X
