@@ -53,7 +53,9 @@ public class FruitoreNotizie {
                             types.add(pickedType);
                         }
 
+                        System.out.print("Fruitore ha scelto tipologie: ");
                         for(Notizia.Tipo type: types) {
+                            System.out.print(type.toString()+" ");
                             outToServer = s1.getOutputStream();
                             out = new ObjectOutputStream(outToServer);
 
