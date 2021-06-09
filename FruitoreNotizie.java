@@ -42,8 +42,6 @@ public class FruitoreNotizie {
  
                         req = new ClientRequest(true, Notizia.Tipo.POLITICA, s1.getLocalSocketAddress());
                         out.writeObject(req);
-                        out.close();
-                        outToServer.close();
 
                         outToServer = s1.getOutputStream();
                         out = new ObjectOutputStream(outToServer);
