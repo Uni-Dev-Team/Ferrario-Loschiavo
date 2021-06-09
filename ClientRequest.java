@@ -16,7 +16,6 @@ public class ClientRequest implements Serializable {
     }
 
     // Getters & Setters
-    
     public Boolean getEditFlag() {
         return editFlag;
     }

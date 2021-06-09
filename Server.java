@@ -7,6 +7,7 @@ public class Server extends Thread {
     private ServerSocket serverSocket;
     private static List<ClientInfo> clientList = new ArrayList<ClientInfo>();
     private static List<ClientInfo> unreachableClientList = new ArrayList<ClientInfo>();
+    private static List<ServeOneFruitore> serversThreads = new ArrayList<ServeOneFruitore>();
     private static Pubblicatore publisher;
     private final InetAddress ipAddress = InetAddress.getLocalHost();
 
@@ -22,18 +23,19 @@ public class Server extends Thread {
 
                 try {
                     newRequest = (ClientRequest) in.readObject();
+                    System.out.println("RICHIESTA RICEVUTA DAL CLIENT: " + newRequest.getSocketAddress().toString());
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
 
-                if (!isClientPresent(newRequest.getSocketAddress())) {
-                    List<Notizia.Tipo> newsTypes = new ArrayList<Notizia.Tipo>();
-                    newsTypes.add(newRequest.getType());
-                    ClientInfo newClient = new ClientInfo(newsTypes, server, newRequest.getSocketAddress());
-                    clientList.add(newClient);
-                } else {
-                    System.out.println("RICHIESTA DA CLIENT GIA' COLLEGATO");
-                }
+                List<Notizia.Tipo> newsTypes = new ArrayList<Notizia.Tipo>();
+                newsTypes.add(newRequest.getType());
+                ClientInfo newClient = new ClientInfo(newsTypes, server, newRequest.getSocketAddress());
+                clientList.add(newClient);
+
+                ServeOneFruitore serverThread = new ServeOneFruitore(newClient);
+                serverThread.start();
+                serversThreads.add(serverThread);
 
                 System.out.println("Server info: \n<< Client Connected List: >>");
 
@@ -111,16 +113,6 @@ public class Server extends Thread {
        
     }
 
-    private Boolean isClientPresent(SocketAddress sAddress) {
-        Boolean resl = false;
-        for (ClientInfo client : clientList) {
-            if (client.getSocketAddress().equals(sAddress)) {
-                resl = true;
-                break;
-            }
-        }
-        return resl;
-    }
 
     // Main
     public static void main(String[] args) {
@@ -135,6 +127,46 @@ public class Server extends Thread {
 
       // Thread pubblicatore parte con la sua attività
       publisher.start();
+    }
+}
+
+class ServeOneFruitore extends Thread {
+    Socket socket;
+    ClientInfo clientInfo;
+    private ObjectInputStream in;
+    private ObjectOutputStream out;
+
+    public ServeOneFruitore(ClientInfo cInfo) {
+        this.socket = cInfo.getSocket();
+        this.clientInfo = cInfo;
+        try {
+            in = new ObjectInputStream(socket.getInputStream());
+            out = new ObjectOutputStream(socket.getOutputStream());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+
+    public void run() {
+        try {
+            while(true) {
+                ClientRequest req = (ClientRequest) in.readObject();
+
+                if(req.getEditFlag()) {
+                    // Aggiungi tipo specificato
+                    System.out.println("RICHIESTA: " + req.getSocketAddress().toString() + " vuole AGGIUNGERE il tipo " + req.getType().toString());
+                } else {
+                    // Rimuovi tipo specificato
+                    System.out.println("RICHIESTA: " + req.getSocketAddress().toString() + " vuole RIMUOVERE il tipo " + req.getType().toString());
+                }
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        } catch(ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
 
